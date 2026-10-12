@@ -1,0 +1,52 @@
+# Tiny profile for tests and CI: two sites, ~5 months, CPU-only, finishes in seconds.
+# Layered on top of default.yaml, so only differences are listed.
+
+data:
+  days: 150
+  future_days: 4
+  sites: [frostholm, dunehaven]
+
+gbm:
+  max_iter: 40
+  max_leaf_nodes: 16
+
+ets:
+  window_days: 21
+  seasonal_periods: 24
+  calibration_origins: 4
+
+deep:
+  hidden_size: 16
+  num_layers: 1
+  embedding_dim: 4
+  tcn_channels: 16
+  tcn_levels: 5
+  epochs: 2
+  patience: 2
+  batch_size: 64
+  samples_per_epoch: 512
+  val_days: 7
+  deterministic: true
+  device: cpu
+  amp: false
+
+backtest:
+  folds: 2
+  test_days: 7
+  warm_start_epochs: 1
+
+benchmark:
+  modes: [cpu]
+  gpu_train_samples: 512
+  cpu_train_samples: 256
+  epochs: 1
+  batch_size: 64
+  cpu_batch_size: 64
+  inference_batch_size: 64
+  inference_repeats: 3
+  cpu_threads: 2
+  sample_interval_s: 0.1
+
+decision:
+  horizon_hours: 48
+  deferrable_mwh: 20

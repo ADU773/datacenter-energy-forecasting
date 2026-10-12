@@ -1,0 +1,802 @@
+{
+  "generated_by": "dcforecast 0.1.0",
+  "profile": "default",
+  "hardware": {
+    "host": "host-01",
+    "os": "Windows 11",
+    "python": "3.14.3",
+    "torch": "2.11.0+cu128",
+    "cpu_model": "AMD Ryzen 7 6800HS with Radeon Graphics",
+    "cpu_physical_cores": 8,
+    "cpu_logical_cores": 16,
+    "ram_total_gb": 14.78,
+    "ram_available_gb": 2.71,
+    "gpus": [
+      {
+        "name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+        "vram_total_gb": 4.0,
+        "vram_free_gb": 2.1,
+        "cuda_version": "12.8",
+        "driver_version": "616.92",
+        "compute_capability": "8.6"
+      }
+    ],
+    "accelerator": "cuda"
+  },
+  "data": {
+    "sites": 6,
+    "rows": 157824,
+    "start": "2023-01-01T00:00:00",
+    "end": "2025-12-31T23:00:00",
+    "qa": {
+      "totals": {
+        "rows_expected": 157824,
+        "rows_received": 157745,
+        "missing": 8458,
+        "out_of_range": 73,
+        "stuck": 5247,
+        "spike": 853
+      },
+      "injected_faults": {
+        "gap": 6871,
+        "missing": 1271,
+        "outage": 316,
+        "spike": 967,
+        "stuck": 5291
+      },
+      "detection": {
+        "spike_injected": 967,
+        "spike_recall": 0.9535,
+        "stuck_injected": 5291,
+        "stuck_recall": 0.9909,
+        "flagged": 6173,
+        "precision": 0.9987
+      },
+      "imputation_error": {
+        "it_load_kw": {
+          "cells": 3592,
+          "mae": 143.551,
+          "mape_pct": 1.47
+        },
+        "facility_kw": {
+          "cells": 3646,
+          "mae": 176.017,
+          "mape_pct": 1.472
+        },
+        "temp_c": {
+          "cells": 3563,
+          "mae": 1.348
+        },
+        "rh_pct": {
+          "cells": 3915,
+          "mae": 4.846
+        }
+      },
+      "facility_imputed_pct": 2.307
+    }
+  },
+  "backtest": {
+    "folds": [
+      {
+        "fold": 1,
+        "train_end": "2025-09-10T23:00:00",
+        "test_start": "2025-09-11T00:00:00",
+        "test_end": "2025-10-08T23:00:00",
+        "n_origins": 28
+      },
+      {
+        "fold": 2,
+        "train_end": "2025-10-08T23:00:00",
+        "test_start": "2025-10-09T00:00:00",
+        "test_end": "2025-11-05T23:00:00",
+        "n_origins": 28
+      },
+      {
+        "fold": 3,
+        "train_end": "2025-11-05T23:00:00",
+        "test_start": "2025-11-06T00:00:00",
+        "test_end": "2025-12-03T23:00:00",
+        "n_origins": 28
+      },
+      {
+        "fold": 4,
+        "train_end": "2025-12-03T23:00:00",
+        "test_start": "2025-12-04T00:00:00",
+        "test_end": "2025-12-31T23:00:00",
+        "n_origins": 28
+      }
+    ],
+    "leaderboard": [
+      {
+        "rank": 1,
+        "model": "lstm",
+        "n": 15769,
+        "mae": 164.3561135079111,
+        "rmse": 271.002205894854,
+        "mape": 1.2901388224835455,
+        "smape": 1.2682732734099733,
+        "pinball": 53.688749600349844,
+        "coverage_80": 0.7514744118206608,
+        "interval_width": 452.7185089713203,
+        "bias": 18.213721393636245,
+        "mase": 0.40427391802731827,
+        "pinball_scaled": 0.13262189526262677
+      },
+      {
+        "rank": 2,
+        "model": "tcn",
+        "n": 15769,
+        "mae": 169.22726880320963,
+        "rmse": 276.30148618954735,
+        "mape": 1.333511611398792,
+        "smape": 1.310081273110482,
+        "pinball": 55.13329647510213,
+        "coverage_80": 0.7820407127909189,
+        "interval_width": 502.9301540750444,
+        "bias": 32.003663103339626,
+        "mase": 0.4173493559757109,
+        "pinball_scaled": 0.13637768969366307
+      },
+      {
+        "rank": 3,
+        "model": "gbm",
+        "n": 15769,
+        "mae": 177.0708882285058,
+        "rmse": 284.87065398073935,
+        "mape": 1.3732095796287018,
+        "smape": 1.3547481423573133,
+        "pinball": 58.194426773001055,
+        "coverage_80": 0.7640941086942735,
+        "interval_width": 519.735848141027,
+        "bias": -12.472101560346314,
+        "mase": 0.431478446684356,
+        "pinball_scaled": 0.14234504540412465
+      },
+      {
+        "rank": 4,
+        "model": "ets",
+        "n": 15769,
+        "mae": 275.8679135069083,
+        "rmse": 462.741065206496,
+        "mape": 2.130060599352867,
+        "smape": 2.1093215112204944,
+        "pinball": 94.34292321666145,
+        "coverage_80": 0.764981926564779,
+        "interval_width": 798.3732951928699,
+        "bias": 33.218009066268934,
+        "mase": 0.6608715765593544,
+        "pinball_scaled": 0.22584838812963118
+      },
+      {
+        "rank": 5,
+        "model": "naive168",
+        "n": 15769,
+        "mae": 311.45076649419974,
+        "rmse": 517.3867822275423,
+        "mape": 2.3846913781949786,
+        "smape": 2.3661748233890036,
+        "pinball": 111.13693703695822,
+        "coverage_80": 0.8042995751157334,
+        "interval_width": 936.3299103284688,
+        "bias": 17.782459240462316,
+        "mase": 0.7529363413690805,
+        "pinball_scaled": 0.2684378821844385
+      },
+      {
+        "rank": 6,
+        "model": "naive24",
+        "n": 15769,
+        "mae": 511.16993900672463,
+        "rmse": 796.0906705332368,
+        "mape": 3.914425721377747,
+        "smape": 3.89872992080422,
+        "pinball": 181.29807646572192,
+        "coverage_80": 0.7894603335658571,
+        "interval_width": 2113.380803121531,
+        "bias": 7.38909457016307,
+        "mase": 1.2326234895687547,
+        "pinball_scaled": 0.4372905723901979
+      }
+    ],
+    "best_model": "lstm",
+    "timings": {
+      "naive24": {
+        "fit_s": 1.0603533000103198,
+        "predict_s": 0.16687480002292432
+      },
+      "naive168": {
+        "fit_s": 1.08954299998004,
+        "predict_s": 0.15122519998112693
+      },
+      "ets": {
+        "fit_s": 16.27450490000774,
+        "predict_s": 18.216129900014494
+      },
+      "gbm": {
+        "fit_s": 72.57334830000764,
+        "predict_s": 0.5628422999870963
+      },
+      "lstm": {
+        "fit_s": 157.81624830001965,
+        "predict_s": 0.21810070000356063,
+        "device": "cuda"
+      },
+      "tcn": {
+        "fit_s": 301.61355539999204,
+        "predict_s": 3.812484099995345,
+        "device": "cuda"
+      }
+    }
+  },
+  "production_model": {
+    "alias": "production",
+    "name": "lstm",
+    "version": 1,
+    "reason": "best backtest mase = 0.4043"
+  },
+  "benchmark": {
+    "hardware": {
+      "host": "host-01",
+      "os": "Windows 11",
+      "python": "3.14.3",
+      "torch": "2.11.0+cu128",
+      "cpu_model": "AMD Ryzen 7 6800HS with Radeon Graphics",
+      "cpu_physical_cores": 8,
+      "cpu_logical_cores": 16,
+      "ram_total_gb": 14.78,
+      "ram_available_gb": 2.71,
+      "gpus": [
+        {
+          "name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+          "vram_total_gb": 4.0,
+          "vram_free_gb": 2.1,
+          "cuda_version": "12.8",
+          "driver_version": "616.92",
+          "compute_capability": "8.6"
+        }
+      ],
+      "accelerator": "cuda"
+    },
+    "config": {
+      "batch_size": 1024,
+      "epochs": 2,
+      "gpu_train_samples_per_epoch": 32768,
+      "cpu_train_samples_per_epoch": 4096,
+      "cpu_threads": 8,
+      "lookback": 168,
+      "horizon": 24,
+      "dataloader_workers": 0
+    },
+    "results": [
+      {
+        "model": "lstm",
+        "mode": "cpu",
+        "device": "cpu",
+        "amp": false,
+        "batch_size": 1024,
+        "train_samples": 8192,
+        "epochs": 2,
+        "train_samples_per_s": 1635.8,
+        "train_samples_per_s_incl_warmup": 1310.7,
+        "epoch_s_measured": 2.504,
+        "epoch_s_full": 36.68,
+        "train_peak_gpu_mem_mb": null,
+        "infer_batch_size": 256,
+        "infer_latency": {
+          "p50_ms": 34.054,
+          "p95_ms": 39.792,
+          "mean_ms": 34.727
+        },
+        "infer_latency_batch1": {
+          "p50_ms": 2.079,
+          "p95_ms": 2.474,
+          "mean_ms": 2.085
+        },
+        "infer_samples_per_s": 7517.5,
+        "infer_peak_gpu_mem_mb": null,
+        "cpu_threads": 8,
+        "sampled_cpu_percent_mean": 760.38,
+        "sampled_cpu_percent_max": 804.4,
+        "sampled_rss_mb_max": 1957.33,
+        "sampled_gpu_util_percent_mean": null,
+        "sampled_gpu_util_percent_max": null,
+        "sampled_gpu_mem_used_mb_max": null,
+        "sampled_n_samples": 24.0,
+        "params": 117107
+      },
+      {
+        "model": "lstm",
+        "mode": "cuda_fp32",
+        "device": "cuda",
+        "amp": false,
+        "batch_size": 1024,
+        "train_samples": 65536,
+        "epochs": 2,
+        "train_samples_per_s": 23372.6,
+        "train_samples_per_s_incl_warmup": 20170.9,
+        "epoch_s_measured": 1.402,
+        "epoch_s_full": 2.57,
+        "train_peak_gpu_mem_mb": 1666.6,
+        "infer_batch_size": 256,
+        "infer_latency": {
+          "p50_ms": 4.165,
+          "p95_ms": 4.517,
+          "mean_ms": 4.209
+        },
+        "infer_latency_batch1": {
+          "p50_ms": 1.325,
+          "p95_ms": 1.761,
+          "mean_ms": 1.403
+        },
+        "infer_samples_per_s": 61464.6,
+        "infer_peak_gpu_mem_mb": 286.0,
+        "cpu_threads": null,
+        "sampled_cpu_percent_mean": 723.59,
+        "sampled_cpu_percent_max": 833.5,
+        "sampled_rss_mb_max": 2045.86,
+        "sampled_gpu_util_percent_mean": 82.54,
+        "sampled_gpu_util_percent_max": 99.0,
+        "sampled_gpu_mem_used_mb_max": 2432.0,
+        "sampled_n_samples": 12.0,
+        "params": 117107
+      },
+      {
+        "model": "lstm",
+        "mode": "cuda_amp",
+        "device": "cuda",
+        "amp": true,
+        "batch_size": 1024,
+        "train_samples": 65536,
+        "epochs": 2,
+        "train_samples_per_s": 26152.5,
+        "train_samples_per_s_incl_warmup": 25827.8,
+        "epoch_s_measured": 1.253,
+        "epoch_s_full": 2.29,
+        "train_peak_gpu_mem_mb": 861.2,
+        "infer_batch_size": 256,
+        "infer_latency": {
+          "p50_ms": 3.971,
+          "p95_ms": 4.654,
+          "mean_ms": 3.902
+        },
+        "infer_latency_batch1": {
+          "p50_ms": 3.081,
+          "p95_ms": 3.572,
+          "mean_ms": 3.091
+        },
+        "infer_samples_per_s": 64467.4,
+        "infer_peak_gpu_mem_mb": 159.8,
+        "cpu_threads": null,
+        "sampled_cpu_percent_mean": 785.73,
+        "sampled_cpu_percent_max": 826.4,
+        "sampled_rss_mb_max": 2051.09,
+        "sampled_gpu_util_percent_mean": 38.3,
+        "sampled_gpu_util_percent_max": 88.0,
+        "sampled_gpu_mem_used_mb_max": 1396.0,
+        "sampled_n_samples": 10.0,
+        "params": 117107
+      },
+      {
+        "model": "tcn",
+        "mode": "cpu",
+        "device": "cpu",
+        "amp": false,
+        "batch_size": 1024,
+        "train_samples": 8192,
+        "epochs": 2,
+        "train_samples_per_s": 383.6,
+        "train_samples_per_s_incl_warmup": 351.9,
+        "epoch_s_measured": 10.677,
+        "epoch_s_full": 156.41,
+        "train_peak_gpu_mem_mb": null,
+        "infer_batch_size": 256,
+        "infer_latency": {
+          "p50_ms": 71.666,
+          "p95_ms": 118.461,
+          "mean_ms": 77.421
+        },
+        "infer_latency_batch1": {
+          "p50_ms": 3.818,
+          "p95_ms": 4.096,
+          "mean_ms": 3.753
+        },
+        "infer_samples_per_s": 3572.1,
+        "infer_peak_gpu_mem_mb": null,
+        "cpu_threads": 8,
+        "sampled_cpu_percent_mean": 640.55,
+        "sampled_cpu_percent_max": 821.1,
+        "sampled_rss_mb_max": 2560.32,
+        "sampled_gpu_util_percent_mean": null,
+        "sampled_gpu_util_percent_max": null,
+        "sampled_gpu_mem_used_mb_max": null,
+        "sampled_n_samples": 91.0,
+        "params": 93507
+      },
+      {
+        "model": "tcn",
+        "mode": "cuda_fp32",
+        "device": "cuda",
+        "amp": false,
+        "batch_size": 1024,
+        "train_samples": 65536,
+        "epochs": 2,
+        "train_samples_per_s": 10641.6,
+        "train_samples_per_s_incl_warmup": 5269.9,
+        "epoch_s_measured": 3.079,
+        "epoch_s_full": 5.64,
+        "train_peak_gpu_mem_mb": 1115.7,
+        "infer_batch_size": 256,
+        "infer_latency": {
+          "p50_ms": 8.862,
+          "p95_ms": 9.406,
+          "mean_ms": 8.937
+        },
+        "infer_latency_batch1": {
+          "p50_ms": 3.264,
+          "p95_ms": 3.578,
+          "mean_ms": 3.283
+        },
+        "infer_samples_per_s": 28887.4,
+        "infer_peak_gpu_mem_mb": 1204.1,
+        "cpu_threads": null,
+        "sampled_cpu_percent_mean": 439.24,
+        "sampled_cpu_percent_max": 832.4,
+        "sampled_rss_mb_max": 2598.38,
+        "sampled_gpu_util_percent_mean": 55.96,
+        "sampled_gpu_util_percent_max": 99.0,
+        "sampled_gpu_mem_used_mb_max": 1536.0,
+        "sampled_n_samples": 49.0,
+        "params": 93507
+      },
+      {
+        "model": "tcn",
+        "mode": "cuda_amp",
+        "device": "cuda",
+        "amp": true,
+        "batch_size": 1024,
+        "train_samples": 65536,
+        "epochs": 2,
+        "train_samples_per_s": 12380.7,
+        "train_samples_per_s_incl_warmup": 12353.3,
+        "epoch_s_measured": 2.647,
+        "epoch_s_full": 4.85,
+        "train_peak_gpu_mem_mb": 634.3,
+        "infer_batch_size": 256,
+        "infer_latency": {
+          "p50_ms": 5.795,
+          "p95_ms": 6.248,
+          "mean_ms": 5.832
+        },
+        "infer_latency_batch1": {
+          "p50_ms": 4.483,
+          "p95_ms": 4.853,
+          "mean_ms": 4.495
+        },
+        "infer_samples_per_s": 44176.0,
+        "infer_peak_gpu_mem_mb": 55.6,
+        "cpu_threads": null,
+        "sampled_cpu_percent_mean": 761.89,
+        "sampled_cpu_percent_max": 817.7,
+        "sampled_rss_mb_max": 2612.92,
+        "sampled_gpu_util_percent_mean": 67.33,
+        "sampled_gpu_util_percent_max": 79.0,
+        "sampled_gpu_mem_used_mb_max": 1020.0,
+        "sampled_n_samples": 20.0,
+        "params": 93507
+      }
+    ],
+    "speedups": [
+      {
+        "model": "lstm",
+        "train_speedup_cuda_fp32_vs_cpu": 14.29,
+        "infer_speedup_cuda_fp32_vs_cpu": 8.18,
+        "train_speedup_cuda_amp_vs_cpu": 15.99,
+        "infer_speedup_cuda_amp_vs_cpu": 8.58,
+        "train_speedup_amp_vs_fp32": 1.12,
+        "train_mem_ratio_amp_vs_fp32": 0.52
+      },
+      {
+        "model": "tcn",
+        "train_speedup_cuda_fp32_vs_cpu": 27.74,
+        "infer_speedup_cuda_fp32_vs_cpu": 8.09,
+        "train_speedup_cuda_amp_vs_cpu": 32.28,
+        "infer_speedup_cuda_amp_vs_cpu": 12.37,
+        "train_speedup_amp_vs_fp32": 1.16,
+        "train_mem_ratio_amp_vs_fp32": 0.57
+      }
+    ]
+  },
+  "decision": {
+    "origin": "2025-12-31T23:00:00",
+    "horizon_hours": 72,
+    "sites": [
+      "dunehaven",
+      "frostholm",
+      "highmesa",
+      "ironvale",
+      "marisport",
+      "tidewater"
+    ],
+    "energy_rollup": [
+      {
+        "site_id": "dunehaven",
+        "site_name": "Dunehaven",
+        "hours": 72,
+        "energy_mwh_p10": 1071.038640717668,
+        "cost_usd_p10": 72862.23669074423,
+        "tco2_p10": 508.98224646998847,
+        "energy_mwh_p50": 1097.484205078125,
+        "cost_usd_p50": 74691.76881054687,
+        "tco2_p50": 521.7030235694722,
+        "energy_mwh_p90": 1123.869783659338,
+        "cost_usd_p90": 76519.5165155374,
+        "tco2_p90": 534.4009608183577,
+        "avg_price_usd_per_mwh": 68.05726083796341,
+        "avg_carbon_g_per_kwh": 475.3626714220771
+      },
+      {
+        "site_id": "frostholm",
+        "site_name": "Frostholm",
+        "hours": 72,
+        "energy_mwh_p10": 647.9853820663724,
+        "cost_usd_p10": 31758.382727452532,
+        "tco2_p10": 31.996574570633346,
+        "energy_mwh_p50": 662.940568359375,
+        "cost_usd_p50": 32494.487912109376,
+        "tco2_p50": 32.746097020458585,
+        "energy_mwh_p90": 677.7811447582574,
+        "cost_usd_p90": 33224.80241733056,
+        "tco2_p90": 33.49027609990521,
+        "avg_price_usd_per_mwh": 49.015687775038025,
+        "avg_carbon_g_per_kwh": 49.395222714303976
+      },
+      {
+        "site_id": "highmesa",
+        "site_name": "High Mesa",
+        "hours": 72,
+        "energy_mwh_p10": 693.1160244108794,
+        "cost_usd_p10": 42089.39246357706,
+        "tco2_p10": 186.5137778807986,
+        "energy_mwh_p50": 710.3453798828125,
+        "cost_usd_p50": 43152.75251074218,
+        "tco2_p50": 191.0483484261346,
+        "energy_mwh_p90": 727.6169376481897,
+        "cost_usd_p90": 44220.68623227373,
+        "tco2_p90": 195.5968549219554,
+        "avg_price_usd_per_mwh": 60.74897329220499,
+        "avg_carbon_g_per_kwh": 268.95134935297574
+      },
+      {
+        "site_id": "ironvale",
+        "site_name": "Ironvale",
+        "hours": 72,
+        "energy_mwh_p10": 1110.212300897393,
+        "cost_usd_p10": 53581.40621909919,
+        "tco2_p10": 877.8571217948528,
+        "energy_mwh_p50": 1135.359830078125,
+        "cost_usd_p50": 54821.043405273434,
+        "tco2_p50": 897.354413539226,
+        "energy_mwh_p90": 1160.4123027174376,
+        "cost_usd_p90": 56056.182519343914,
+        "tco2_p90": 916.7745201708997,
+        "avg_price_usd_per_mwh": 48.285170879703536,
+        "avg_carbon_g_per_kwh": 790.3700569338255
+      },
+      {
+        "site_id": "marisport",
+        "site_name": "Marisport",
+        "hours": 72,
+        "energy_mwh_p10": 925.8239319217231,
+        "cost_usd_p10": 74691.76953806797,
+        "tco2_p10": 332.5747649890709,
+        "energy_mwh_p50": 946.5294951171875,
+        "cost_usd_p50": 76382.14111328125,
+        "tco2_p50": 339.543481271734,
+        "energy_mwh_p90": 967.1971036879559,
+        "cost_usd_p90": 78069.81306995047,
+        "tco2_p90": 346.50247697170613,
+        "avg_price_usd_per_mwh": 80.69705329554951,
+        "avg_carbon_g_per_kwh": 358.72467051826624
+      },
+      {
+        "site_id": "tidewater",
+        "site_name": "Tidewater Key",
+        "hours": 72,
+        "energy_mwh_p10": 984.0395061850413,
+        "cost_usd_p10": 98372.31318541792,
+        "tco2_p10": 462.70330916138755,
+        "energy_mwh_p50": 1008.7020869140625,
+        "cost_usd_p50": 100839.01457421875,
+        "tco2_p50": 474.32652817686505,
+        "energy_mwh_p90": 1033.2770761289432,
+        "cost_usd_p90": 103296.42954843785,
+        "tco2_p90": 485.90966849426377,
+        "avg_price_usd_per_mwh": 99.96907499489474,
+        "avg_carbon_g_per_kwh": 470.2345066301779
+      },
+      {
+        "site_id": "TOTAL",
+        "site_name": "Fleet",
+        "hours": 72,
+        "energy_mwh_p10": 5432.215786199077,
+        "cost_usd_p10": 373355.5008243589,
+        "tco2_p10": 2400.6277948667316,
+        "energy_mwh_p50": 5561.361565429687,
+        "cost_usd_p50": 382381.20832617185,
+        "tco2_p50": 2456.7218920038904,
+        "energy_mwh_p90": 5690.154348600122,
+        "cost_usd_p90": 391387.43030287395,
+        "tco2_p90": 2512.674757477088,
+        "avg_price_usd_per_mwh": 68.75676106065727,
+        "avg_carbon_g_per_kwh": 441.748277485727
+      }
+    ],
+    "forecast_vs_realized": {
+      "hours": 72,
+      "energy_mwh_forecast": 5561.361565429687,
+      "energy_mwh_actual": 5583.711391046556,
+      "energy_error_pct": -0.40026828128521214,
+      "hourly_mape_pct": 1.322349979251308,
+      "p10_p90_coverage": 0.8032407407407407
+    },
+    "deferrable_mwh": 120.0,
+    "portable_fraction": 0.5,
+    "plans": [
+      {
+        "plan": "run immediately (baseline)",
+        "unserved_mwh": 1.3642420526593923e-14,
+        "it_mwh": 120.0,
+        "facility_mwh": 139.71834670612517,
+        "tco2": 68.32124603547037,
+        "cost_usd": 8286.591295314967,
+        "peak_kw": 10000.0,
+        "share_moved_offsite": 0.0,
+        "tco2_saved": 0.0,
+        "tco2_saved_pct": 0.0,
+        "usd_saved": 0.0,
+        "usd_saved_pct": 0.0,
+        "realized_tco2": 64.6151661109318,
+        "realized_tco2_saved": 0.0,
+        "realized_tco2_saved_pct": 0.0,
+        "realized_usd_saved": 0.0
+      },
+      {
+        "plan": "carbon-optimal (time-shift only)",
+        "unserved_mwh": 0.0,
+        "it_mwh": 119.99999999999999,
+        "facility_mwh": 142.07956987385336,
+        "tco2": 50.92058811806759,
+        "cost_usd": 10563.381754960257,
+        "peak_kw": 12985.299736984944,
+        "share_moved_offsite": 0.0,
+        "tco2_saved": 17.400657917402775,
+        "tco2_saved_pct": 25.468882561610293,
+        "usd_saved": -2276.79045964529,
+        "usd_saved_pct": -27.47559736574109,
+        "realized_tco2": 53.038598296403485,
+        "realized_tco2_saved": 11.57656781452831,
+        "realized_tco2_saved_pct": 17.916177441459443,
+        "realized_usd_saved": -2168.794518800696
+      },
+      {
+        "plan": "carbon-optimal",
+        "unserved_mwh": 0.0,
+        "it_mwh": 120.0,
+        "facility_mwh": 137.80221230789675,
+        "tco2": 28.02259991457008,
+        "cost_usd": 8036.720156305713,
+        "peak_kw": 11330.512939743247,
+        "share_moved_offsite": 0.43258426966292135,
+        "tco2_saved": 40.29864612090029,
+        "tco2_saved_pct": 58.98406200024282,
+        "usd_saved": 249.87113900925397,
+        "usd_saved_pct": 3.0153669959628018,
+        "realized_tco2": 29.223897507460613,
+        "realized_tco2_saved": 35.39126860347118,
+        "realized_tco2_saved_pct": 54.77238662934208,
+        "realized_usd_saved": 296.5090440502663
+      },
+      {
+        "plan": "cost-optimal",
+        "unserved_mwh": 0.0,
+        "it_mwh": 120.00000000000001,
+        "facility_mwh": 136.85299673565123,
+        "tco2": 88.72577305167914,
+        "cost_usd": 6657.35596048748,
+        "peak_kw": 11123.595505617977,
+        "share_moved_offsite": 0.3876404494382023,
+        "tco2_saved": -20.404527016208775,
+        "tco2_saved_pct": -29.865566277311963,
+        "usd_saved": 1629.2353348274873,
+        "usd_saved_pct": 19.66110402655693,
+        "realized_tco2": 85.85355813606228,
+        "realized_tco2_saved": -21.23839202513048,
+        "realized_tco2_saved_pct": -32.869051189419295,
+        "realized_usd_saved": 1606.3212594963716
+      },
+      {
+        "plan": "blended ($85/tCO2)",
+        "unserved_mwh": 0.0,
+        "it_mwh": 120.0,
+        "facility_mwh": 136.77808657267278,
+        "tco2": 28.991292951726212,
+        "cost_usd": 6803.775365801684,
+        "peak_kw": 11330.512939743247,
+        "share_moved_offsite": 0.43258426966292135,
+        "tco2_saved": 39.32995308374416,
+        "tco2_saved_pct": 57.56621163396992,
+        "usd_saved": 1482.8159295132837,
+        "usd_saved_pct": 17.89416029666663,
+        "realized_tco2": 30.27418007732296,
+        "realized_tco2_saved": 34.340986033608836,
+        "realized_tco2_saved_pct": 53.14694382221656,
+        "realized_usd_saved": 1485.8433974663876
+      }
+    ],
+    "pareto": [
+      {
+        "carbon_price_usd_per_t": 0.0,
+        "cost_usd": 6657.35596048748,
+        "tco2": 88.72577305167914
+      },
+      {
+        "carbon_price_usd_per_t": 25.0,
+        "cost_usd": 6768.794993665096,
+        "tco2": 29.843486139721044
+      },
+      {
+        "carbon_price_usd_per_t": 50.0,
+        "cost_usd": 6796.940265600877,
+        "tco2": 29.09287586665593
+      },
+      {
+        "carbon_price_usd_per_t": 100.0,
+        "cost_usd": 6810.515504859451,
+        "tco2": 28.91977845815493
+      },
+      {
+        "carbon_price_usd_per_t": 200.0,
+        "cost_usd": 6826.1664769115205,
+        "tco2": 28.7827777416138
+      },
+      {
+        "carbon_price_usd_per_t": 400.0,
+        "cost_usd": 6829.6859636225545,
+        "tco2": 28.771743329302303
+      },
+      {
+        "carbon_price_usd_per_t": 800.0,
+        "cost_usd": 7093.778796829764,
+        "tco2": 28.33517287694696
+      },
+      {
+        "carbon_price_usd_per_t": 1600.0,
+        "cost_usd": 7278.384745253962,
+        "tco2": 28.176394751972882
+      }
+    ],
+    "chosen_plan": "carbon-optimal"
+  },
+  "pipeline_timings_s": {
+    "generate": 0.77,
+    "prepare": 2.28,
+    "backtest": 575.53,
+    "train": 80.3,
+    "benchmark": 73.37,
+    "decision": 0.71,
+    "total_before_report": 733.07,
+    "report": 8.14,
+    "total": 741.23
+  },
+  "resources": {
+    "peak_rss_mb": 2747.6,
+    "gpu_peak_allocated_mb": 55.6,
+    "gpu_peak_reserved_mb": 762.0,
+    "disk_mb": {
+      "data": 31.75,
+      "runs": 10.02,
+      "reports": 2.44,
+      "docs": 1.9
+    }
+  }
+}

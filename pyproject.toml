@@ -1,0 +1,103 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dcforecast"
+version = "0.1.0"
+description = "GPU-accelerated probabilistic forecasting of data-center power demand, turned into energy-cost, carbon and carbon-aware scheduling decisions."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Advaith A Arun" }]
+keywords = [
+  "forecasting",
+  "time-series",
+  "pytorch",
+  "gpu",
+  "data-center",
+  "energy",
+  "carbon-aware-computing",
+  "mlops",
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "pyarrow>=14",
+  "scipy>=1.11",
+  "scikit-learn>=1.4",
+  "joblib>=1.3",
+  "statsmodels>=0.14",
+  "torch>=2.2",
+  "matplotlib>=3.8",
+  "plotly>=5.18",
+  "jinja2>=3.1",
+  "fastapi>=0.110",
+  "uvicorn>=0.27",
+  "pydantic>=2.5",
+  "psutil>=5.9",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-cov>=4", "ruff>=0.5", "httpx>=0.27"]
+
+[project.scripts]
+dcforecast = "dcforecast.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ADU773/datacenter-energy-forecasting"
+Report = "https://adu773.github.io/datacenter-energy-forecasting/"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+dcforecast = ["configs/*.yaml", "report/templates/*.j2"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = [
+  "gpu: tests that need a CUDA GPU (skipped automatically when unavailable)",
+  "slow: end-to-end tests that run the tiny pipeline",
+]
+filterwarnings = [
+  "ignore::DeprecationWarning:statsmodels.*",
+  "ignore::FutureWarning:statsmodels.*",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "NPY", "RUF"]
+ignore = [
+  "E501",   # long lines are handled by the formatter where possible
+  "B008",   # FastAPI dependency defaults use function calls
+  "RUF001", # ambiguous unicode in strings (docs use plain ASCII anyway)
+  "RUF002",
+  "RUF003",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.coverage.run]
+source = ["dcforecast"]
+omit = ["src/dcforecast/__main__.py"]

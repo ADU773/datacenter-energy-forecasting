@@ -1,0 +1,118 @@
+# dcforecast default configuration
+# Full pipeline on a laptop GPU (RTX 3050, 4 GB) in roughly 10-20 minutes.
+# Override any key with `--set section.key=value` or env `DCF__SECTION__KEY=value`.
+
+seed: 42
+
+paths:
+  data_dir: data          # raw + processed Parquet (gitignored)
+  runs_dir: runs          # SQLite tracker, model registry, checkpoints (gitignored)
+  reports_dir: reports    # machine-readable JSON results (gitignored)
+  docs_dir: docs          # static HTML report + PNGs (committed)
+
+data:
+  start: "2023-01-01"     # first hour (UTC)
+  days: 1096              # ~3 years of hourly history per site
+  future_days: 7          # covariate feed beyond the last observed hour
+  sites: null             # null = all six Helios Cloud sites
+  faults:
+    gap_episodes_per_year: 10
+    gap_max_hours: 18
+    isolated_missing_rate: 0.002
+    spike_rate: 0.0015
+    stuck_episodes_per_year: 4
+    stuck_max_hours: 36
+
+forecast:
+  target: facility_kw
+  horizon: 24             # direct 24-hour-ahead, issued every day at 00:00 UTC
+  quantiles: [0.1, 0.5, 0.9]
+
+features:
+  lags: [24, 48, 168]
+  rolling_windows: [24, 168]
+  fourier_daily: 3
+  fourier_weekly: 2
+  fourier_yearly: 2
+
+gbm:
+  max_iter: 250
+  learning_rate: 0.06
+  max_leaf_nodes: 48
+  min_samples_leaf: 40
+  l2_regularization: 0.1
+  max_train_rows: null
+
+ets:
+  window_days: 42         # Holt-Winters refit on a trailing window (keeps it fast)
+  seasonal_periods: 168   # weekly seasonality captures both daily and weekend cycles
+  calibration_origins: 14
+  sites: null             # restrict to a subset of sites if it gets slow
+
+deep:
+  lookback: 168
+  decoder_lags: [24, 168]
+  hidden_size: 64
+  num_layers: 2
+  embedding_dim: 8
+  dropout: 0.1
+  tcn_channels: 48
+  tcn_kernel_size: 3
+  tcn_levels: 6           # receptive field 253 h >= lookback
+  epochs: 25
+  patience: 4
+  lr: 0.003
+  weight_decay: 0.0001
+  scheduler: onecycle     # onecycle | cosine
+  grad_clip: 1.0
+  batch_size: auto        # VRAM-aware finder, or an integer
+  min_batch_size: 64
+  max_batch_size: 1024
+  vram_budget_mb: 1024    # never plan to use more than this (GPU is shared)
+  vram_budget_fraction: 0.5
+  samples_per_epoch: 60000
+  val_days: 28
+  amp: true               # torch.autocast + GradScaler on CUDA
+  num_workers: auto       # 0 on Windows (spawn overhead), 2 elsewhere
+  pin_memory: true
+  deterministic: false    # true = cuDNN deterministic kernels (slower); seeds are always fixed
+  device: auto            # auto | cuda | mps | cpu
+
+backtest:
+  folds: 4
+  test_days: 28
+  models: [naive24, naive168, ets, gbm, lstm, tcn]
+  deep_warm_start: true   # folds 2..k fine-tune the previous fold's weights
+  warm_start_epochs: 8
+  selection_metric: mase
+
+train:
+  models: [naive24, naive168, ets, gbm, lstm, tcn]
+  warm_start: true        # deep models fine-tune the last backtest fold's weights if present
+
+benchmark:
+  models: [lstm, tcn]
+  modes: [cpu, cuda_fp32, cuda_amp]
+  gpu_train_samples: 32768
+  cpu_train_samples: 4096
+  epochs: 2
+  batch_size: 1024        # GPU: the batch the VRAM-aware finder picks for training (OOM -> halve)
+  cpu_batch_size: 256     # CPU: the default CPU training batch (bigger only costs RAM)
+  inference_batch_size: 256
+  inference_repeats: 40
+  cpu_threads: 8
+  sample_interval_s: 0.25
+
+decision:
+  horizon_hours: 72
+  deferrable_mwh: 120     # IT energy of deferrable batch compute to place
+  objective: carbon       # carbon | cost | blended (cost + carbon price)
+  carbon_price_usd_per_t: 85
+  portable_fraction: 0.5  # share of each site's batch work that may run at another site
+  pool_rate_multiple: 3.0 # batch pool can run at up to 3x its nominal rate
+  baseline_hours: 12      # "run immediately" finishes the work in ~12 h at nominal rate
+
+serve:
+  host: 127.0.0.1
+  port: 8000
+  device: cpu

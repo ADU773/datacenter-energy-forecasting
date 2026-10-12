@@ -1,0 +1,58 @@
+# --- generated data, experiment state and artefacts (never committed) ---
+# (anchored to the repo root so src/dcforecast/data and src/dcforecast/models stay tracked)
+/data/
+/runs/
+/reports/
+/checkpoints/
+/artifacts/
+/mlruns/
+*.ckpt
+*.pt
+*.pth
+*.joblib
+*.pkl
+*.onnx
+*.duckdb
+*.duckdb.wal
+*.db
+*.sqlite
+*.sqlite3
+*.parquet
+!docs/**/*.parquet
+*.log
+/logs/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.ipynb_checkpoints/
+
+# --- virtual environments / secrets ---
+.venv/
+venv/
+env/
+.env
+.env.*
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
